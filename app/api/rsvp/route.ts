@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Nama diperlukan' }, { status: 400 })
     }
 
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('rsvps')
       .insert({
@@ -33,6 +34,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
+  const supabase = getSupabase()
   const { data, error, count } = await supabase
     .from('rsvps')
     .select('*', { count: 'exact' })
