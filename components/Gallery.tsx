@@ -6,13 +6,13 @@ import { X } from 'lucide-react'
 import Image from 'next/image'
 import { weddingConfig } from '@/lib/config'
 
-const placeholderImages = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1529636798458-92182e662485?w=800&q=80&fit=crop', alt: 'Foto Prewedding 1' },
-  { id: 2, src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80&fit=crop', alt: 'Foto Prewedding 2' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=800&q=80&fit=crop', alt: 'Foto Prewedding 3' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80&fit=crop', alt: 'Foto Prewedding 4' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&q=80&fit=crop', alt: 'Foto Prewedding 5' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80&fit=crop', alt: 'Foto Prewedding 6' },
+const galleryImages = [
+  { id: 1, src: '/images/gallery/1.webp', alt: 'Foto Prewedding 1' },
+  { id: 2, src: '/images/gallery/2.webp', alt: 'Foto Prewedding 2' },
+  { id: 3, src: '/images/gallery/3.webp', alt: 'Foto Prewedding 3' },
+  { id: 4, src: '/images/gallery/4.webp', alt: 'Foto Prewedding 4' },
+  { id: 5, src: '/images/gallery/5.webp', alt: 'Foto Prewedding 5' },
+  { id: 6, src: '/images/gallery/6.webp', alt: 'Foto Prewedding 6' },
 ]
 
 export default function Gallery() {
@@ -42,7 +42,7 @@ export default function Gallery() {
 
         {/* Masonry-style grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {placeholderImages.map((img, i) => (
+          {galleryImages.map((img, i) => (
             <motion.div
               key={img.id}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -81,15 +81,15 @@ export default function Gallery() {
           onClick={() => setSelected(null)}
         >
           <button
-            className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors cursor-pointer"
+            className="absolute top-4 right-4 md:top-6 md:right-6 z-[60] p-3 rounded-full bg-black/20 hover:bg-black/40 text-white/80 hover:text-white transition-all cursor-pointer backdrop-blur-sm"
             onClick={() => setSelected(null)}
           >
-            <X className="w-8 h-8" />
+            <X className="w-6 h-6 md:w-8 md:h-8" />
           </button>
           <div className="relative max-h-[90vh] max-w-[90vw] w-full h-full" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={placeholderImages[selected].src}
-              alt={placeholderImages[selected].alt}
+              src={galleryImages[selected].src}
+              alt={galleryImages[selected].alt}
               fill
               sizes="90vw"
               className="object-contain"

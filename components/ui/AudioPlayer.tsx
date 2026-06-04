@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Volume2, VolumeX } from 'lucide-react'
 import { weddingConfig } from '@/lib/config'
@@ -8,6 +8,16 @@ import { weddingConfig } from '@/lib/config'
 export default function AudioPlayer() {
   const [playing, setPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (audioRef.current && weddingConfig.music.enabled) {
+      audioRef.current.play().then(() => {
+        setPlaying(true)
+      }).catch(() => {
+        setPlaying(false)
+      })
+    }
+  }, [])
 
   if (!weddingConfig.music.enabled) return null
 
