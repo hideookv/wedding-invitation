@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-// Catatan: Untuk produksi, ganti dengan database (Supabase/PlanetScale/Prisma)
-// Saat ini menggunakan in-memory storage sebagai placeholder
-
-const rsvpData: Record<string, unknown>[] = []
+import { supabase } from '@/lib/supabase'
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,24 +10,37 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Nama diperlukan' }, { status: 400 })
     }
 
-    const entry = {
-      id: Date.now().toString(),
-      name,
-      attendance,
-      guests: parseInt(guests) || 1,
-      message: message || '',
-      createdAt: new Date().toISOString(),
+    const { data, error } = await supabase
+      .from('rsvps')
+      .insert({
+        name,
+        attendance,
+        guests: parseInt(guests) || 1,
+        message: message || '',
+      })
+      .select()
+      .single()
+
+    if (error) {
+      console.error('[RSVP] Supabase error:', error)
+      return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    rsvpData.push(entry)
-    console.log('[RSVP] New entry:', entry)
-
-    return NextResponse.json({ success: true, data: entry }, { status: 201 })
+    return NextResponse.json({ success: true, data }, { status: 201 })
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
 
 export async function GET() {
-  return NextResponse.json({ data: rsvpData, total: rsvpData.length })
+  const { data, error, count } = await supabase
+    .from('rsvps')
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ data, total: count })
 }
