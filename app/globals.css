@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #FAF5EF;
+  --color-blush: #E8C4B0;
+  --color-sage: #A8B5A0;
+  --color-champagne: #C9A96E;
+  --color-charcoal: #2C2C2C;
+  --color-ivory: #FFFFF0;
+
+  --font-display: var(--font-cormorant), serif;
+  --font-body: var(--font-jost), sans-serif;
+  --font-script: var(--font-great-vibes), cursive;
+
+  --animate-fade-up: fadeUp 0.8s ease forwards;
+  --animate-fade-in: fadeIn 1s ease forwards;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-petal: petalFall 8s linear infinite;
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes petalFall {
+  0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+}
+
+::selection {
+  background-color: var(--color-blush);
+  color: var(--color-charcoal);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blush);
+  border-radius: 3px;
+}
+
+/* Utility classes */
+.section-title {
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  color: var(--color-champagne);
+}
+
+.section-subtitle {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-sage);
+}
+
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.divider-ornament::before,
+.divider-ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: color-mix(in srgb, var(--color-blush) 60%, transparent);
+}
+
+.glass-card {
+  background-color: color-mix(in srgb, white 60%, transparent);
+  backdrop-filter: blur(4px);
+  border: 1px solid color-mix(in srgb, var(--color-blush) 30%, transparent);
+  border-radius: 1rem;
+}
